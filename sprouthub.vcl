@@ -13,6 +13,9 @@ sub vcl_recv {
     unset req.http.cookie;
     set req.backend = sproutcore;
   }
+  else if (req.url ~ "^/tasks$") {
+    error 750 "Moved Temporarily";
+  }
   else if (req.url ~ "^/static") {
     unset req.http.cookie;
     set req.backend = sproutcore;
@@ -84,5 +87,13 @@ sub vcl_deliver {
     set resp.http.X-Cache = "HIT";
   } else {
     set resp.http.X-Cache = "MISS";
+  }
+}
+
+sub vcl_error {
+  if (obj.status == 750) {
+      set obj.http.Location = "http://tasks.sproutcore.com/";
+      set obj.status = 302;
+      deliver;
   }
 }
