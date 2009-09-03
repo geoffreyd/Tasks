@@ -9,7 +9,10 @@ backend persevere {
 }
 
 sub vcl_recv {
-  if (req.url ~ "^/$") {
+  if (req.url ~ "^/favicon.ico$") {
+    error 404 "Not found";
+  }
+  else if (req.url ~ "^/$") {
     unset req.http.cookie;
     set req.backend = sproutcore;
   }
