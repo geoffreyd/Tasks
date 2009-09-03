@@ -13,10 +13,21 @@ Tasks.mixin({
   // Login
   goStateA1: function(){
     // var loginName = "bigboss";
-    var loginName = prompt("Login name:");
-    if (loginName !== null && loginName !== '') {
-      Tasks.authenticate(loginName, 'password'); // TODO: [SG] pass actual password input by user
-    }
+    // var loginName = prompt("Login name:"); // TODO: [SG] replace with real Login dialog
+    // if (loginName !== null && loginName !== '') {
+    //   Tasks.authenticate(loginName, 'password'); // TODO: [SG] pass actual password input by user
+    // }
+    
+    // hack so that demo doesn't require logins or users...
+    var user = CoreTasks.store.createRecord(CoreTasks.User, {
+      name: "Demo User",
+      loginName: "demo",
+      role: CoreTasks.USER_ROLE_DEVELOPER
+    });
+    
+    CoreTasks.set('user', user);
+    this._loadData();
+    this.goStateA3();
   },
 
   // Authentication
