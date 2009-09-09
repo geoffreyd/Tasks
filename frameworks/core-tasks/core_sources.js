@@ -34,7 +34,7 @@ CoreTasks.RemoteDataSource = SC.DataSource.extend({
       .header(contentTypeHeader, contentType).header(acceptHeader, accept);
 
     // Increase the max number of concurrent XHRs to 20 (default is 2).
-    SC.Request.manager.set('maxRequests', 20);
+    // SC.Request.manager.set('maxRequests', 20);
   },
 
   /**
