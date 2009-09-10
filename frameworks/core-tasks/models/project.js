@@ -16,13 +16,6 @@ CoreTasks.UNALLOCATED_TASKS_NAME = '_UnallocatedTasks';
  */
 CoreTasks.Project = CoreTasks.Record.extend(/** @scope CoreTasks.Project.prototype */ {
 
-  /*
-  init: function() {
-    sc_super();
-    this.set('tasks', []);
-  },
-  */
-
   /**
    * The name of the project (ex. "FR1").
    */
@@ -41,12 +34,32 @@ CoreTasks.Project = CoreTasks.Record.extend(/** @scope CoreTasks.Project.prototy
   tasks: SC.Record.toMany('CoreTasks.Task', { defaultValue: [] }),
 
   /**
+   * The index of this project in the order of all projects.
+   */
+  orderIndex: SC.Record.attr(Number, { defaultValue: 0 }),
+
+  /**
    * The path to the icon associated with a project.
    */
   icon: function() {
     if(this.get('tasks').get('length') > 0) return 'project-icon-with-tasks';
     else return 'project-icon-no-tasks';
   }.property().cacheable(),
+
+  /**
+   * A read-only computed propery that returns the list of tasks associated with this project,
+   * ordered by the order index.
+   */
+  sortedTasks: function() {
+    var unsorted = this.get('tasks');
+
+    return unsorted.sort(function(a, b) {
+      var ai = a.get('orderIndex');
+      var bi = b.get('orderIndex');
+      return ai - bi;
+    }); 
+
+  }.property('tasks').cacheable(),
 
   /**
    * A string summarizing key facets of the Project for display.
