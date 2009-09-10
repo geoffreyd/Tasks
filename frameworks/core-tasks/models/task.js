@@ -166,6 +166,11 @@ CoreTasks.Task = CoreTasks.Record.extend({
   }.property('assignee').cacheable(),
 
   /**
+   * The order index of this task in the context of the project.
+   */
+  orderIndex: SC.Record.attr(Number, { defaultValue: 0 }),
+
+  /**
    * The path to the icon associated with a task.
    */
   icon: function() {
