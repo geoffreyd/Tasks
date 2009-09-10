@@ -47,6 +47,20 @@ CoreTasks = SC.Object.create({
   unallocatedTasks: null,
 
   /**
+   * A read-only computed property that returns a sorted list of all projects.
+   */
+  sortedProjects: function() {
+    var unsorted = this.get('store').findAll(CoreTasks.Project);
+
+    return unsorted.sort(function(a, b) {
+      var ai = a.get('orderIndex');
+      var bi = b.get('orderIndex');
+      return ai - bi;
+    }); 
+
+  }.property(),
+
+  /**
    * Creates a new record in the store.
    *
    * @param {CoreTasks.Record} recordType The type of the record.
