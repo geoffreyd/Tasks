@@ -47,7 +47,7 @@ CoreTasks.Project = CoreTasks.Record.extend(/** @scope CoreTasks.Project.prototy
   }.property().cacheable(),
 
   /**
-   * A read-only computed propery that returns the list of tasks associated with this project,
+   * A read-only computed property that returns the list of tasks associated with this project,
    * ordered by the order index.
    */
   sortedTasks: function() {
