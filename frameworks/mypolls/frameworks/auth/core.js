@@ -1,0 +1,2 @@
+
+Auth = SC.Object.create();

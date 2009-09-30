@@ -1,0 +1,2 @@
+
+Sites = SC.Object.create();

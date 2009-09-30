@@ -1,0 +1,2 @@
+
+Admin = SC.Object.create();

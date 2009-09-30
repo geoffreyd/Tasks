@@ -5,7 +5,7 @@
  * @extends SC.DataSource
  * @author Sean Eidemiller
  */
-/*globals CoreTasks sc_require */
+/*globals CoreTasks sc_require Django*/
 sc_require('core');
 sc_require('core_callbacks');
 
@@ -414,19 +414,27 @@ CoreTasks.RemoteDataSource = SC.DataSource.extend({
 CoreTasks.FixturesDataSource = SC.FixturesDataSource.extend({
 
   fetch: function(store, fetchKey, params) {
+    var ret ;
+    console.log("fetch") ;
     // If we got an SC.Query, simply return it (SC.Store already did the work for us). I'm not
     // sure why it even bothers to call fetch(), but it does.
-    if (SC.instanceOf(fetchKey, SC.Query)) return fetchKey;
-
-    var ret = arguments.callee.base.apply(this,arguments);
+    if (SC.instanceOf(fetchKey, SC.Query)) {
+      ret = fetchKey;
+      params = fetchKey.parameters;
+    }else{
+      ret = arguments.callee.base.apply(this,arguments);
+    }
 
     // Assume success.
-    if (params) CoreTasks.invokeCallback(params.successCallback);
+    if (params) {
+      CoreTasks.invokeCallback(params.successCallback);
+    }
 
     return ret;
   },
 
-  retrieveRecord: function(store, storeKey, params) {
+  retrieveRecord: function(store, storeKey, params) { 
+    console.log("retrieveRecord") ;
     var ret = [];
 
     // Notify the store that the data source completed.
@@ -441,7 +449,8 @@ CoreTasks.FixturesDataSource = SC.FixturesDataSource.extend({
     return ret;
   },
 
-  createRecord: function(store, storeKey, params) {
+  createRecord: function(store, storeKey, params) { 
+    console.log("createRecord") ;
     // Notify the store that the data source completed.
     var recordHash = store.readDataHash(storeKey);
     store.dataSourceDidComplete(storeKey, recordHash, store.idFor(storeKey));
@@ -452,7 +461,8 @@ CoreTasks.FixturesDataSource = SC.FixturesDataSource.extend({
     return YES;
   },
 
-  updateRecord: function(store, storeKey, params) {
+  updateRecord: function(store, storeKey, params) { 
+    console.log("updateRecord") ;
     // Notify the store that the data source completed.
     store.dataSourceDidComplete(storeKey);
 
@@ -462,7 +472,8 @@ CoreTasks.FixturesDataSource = SC.FixturesDataSource.extend({
     return YES;
   },
 
-  destroyRecord: function(store, storeKey, params) {
+  destroyRecord: function(store, storeKey, params) { 
+    console.log("destroyRecord") ;
     arguments.callee.base.apply(this,arguments);
 
     // Assume success.
@@ -478,6 +489,10 @@ if (CoreTasks.get('mode') === CoreTasks.get('ONLINE_MODE')) {
   // Use the remote data source.
   CoreTasks.get('store').from(CoreTasks.RemoteDataSource.create());
   console.log('Initialized remote data source.');
+} else if (CoreTasks.get('mode') === CoreTasks.get('DJANGO_MODE')) {
+  CoreTasks.get('store').from(Django.DataSource.create());
+  CoreTasks.set('fixtures', SC.Store.create().from('CoreTasks.FixturesDataSource'));
+  console.log('Initiaized remote Django source.');
 } else {
   // Use the fixtures data source.
   CoreTasks.get('store').from(CoreTasks.FixturesDataSource.create());

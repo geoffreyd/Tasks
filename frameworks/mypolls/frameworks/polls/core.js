@@ -1,0 +1,2 @@
+
+Polls = SC.Object.create();

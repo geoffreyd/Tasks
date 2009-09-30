@@ -1,4 +1,4 @@
-/*globals CoreTasks sc_require */
+/*globals CoreTasks sc_require Tasks */
 
 sc_require('models/record');
 
@@ -59,7 +59,7 @@ CoreTasks.taskValidationWeights[CoreTasks.TASK_VALIDATION_UNTESTED] = 1;
  * @author Suvajit Gupta
  * @author Sean Eidemiller
  */
-CoreTasks.Task = CoreTasks.Record.extend({
+CoreTasks.Task = Tasks.Task.extend({
 
   /**
    * A one-line summary of the task.
@@ -404,3 +404,5 @@ CoreTasks.Task.NEW_TASK_HASH = {
   status: CoreTasks.TASK_STATUS_PLANNED,
   validation: CoreTasks.TASK_VALIDATION_UNTESTED
 };
+
+CoreTasks.ALL_TASKS_QUERY = SC.Query.local(CoreTasks.Task) ;

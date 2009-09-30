@@ -1,0 +1,2 @@
+
+Sessions = SC.Object.create();

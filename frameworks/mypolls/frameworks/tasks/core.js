@@ -1,0 +1,2 @@
+
+Tasks = SC.Object.create();

@@ -1,0 +1,2 @@
+
+Contenttypes = SC.Object.create();

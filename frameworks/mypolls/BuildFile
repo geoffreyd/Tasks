@@ -1,0 +1,12 @@
+
+# Wrapper frameworks
+config :'mypolls', :required => [
+'django',
+'contenttypes',
+'sessions',
+'admin',
+'tasks',
+'auth',
+'sites'
+]
+

@@ -1,4 +1,4 @@
-/*globals CoreTasks sc_require */
+/*globals CoreTasks sc_require Auth */
 sc_require('models/record');
 
 CoreTasks.USER_UNASSIGNED = '_Unassigned';
@@ -26,7 +26,7 @@ CoreTasks.USER_OVER_LOADED = 4;
  * @author Suvajit Gupta
  * @author Sean Eidemiller
  */
-CoreTasks.User = CoreTasks.Record.extend({
+CoreTasks.User = Auth.User.extend({
 
   /**
    * The full name of the user.

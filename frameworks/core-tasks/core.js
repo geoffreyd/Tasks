@@ -21,6 +21,7 @@ CoreTasks = SC.Object.create({
    */
   OFFLINE_MODE: 0,
   ONLINE_MODE: 1,
+  DJANGO_MODE: 2,
 
   // The current mode of operation.
   // TODO: [SE] set Tasks application mode via URL.
@@ -93,11 +94,12 @@ CoreTasks = SC.Object.create({
    * @returns {Object} user record, if macthing one exists, or null.
    */
   getUser: function(loginName) {
-    var users = CoreTasks.get('store').findAll(SC.Query.create({
-      recordType: CoreTasks.User, 
-      conditions: 'loginName = %@',
-      parameters: [loginName]
-    }));
+    console.log('getUser');
+    var users = CoreTasks.get('store').find(SC.Query.local(
+      CoreTasks.User, 
+      'username = %@',
+      [loginName]
+    ));
     if(!users) return null;
     return users.objectAt(0);
   },
@@ -109,11 +111,11 @@ CoreTasks = SC.Object.create({
    * @returns {Object) return project of given name if it exists, null otherwise.
    */
   getProject: function(projectName) {
-    var projects = CoreTasks.get('store').findAll(SC.Query.create({
-      recordType: CoreTasks.Project, 
-      conditions: 'name = %@',
-      parameters: [projectName]
-    }));
+    var projects = CoreTasks.get('store').find(SC.Query.local(
+      CoreTasks.Project, 
+      'name = %@',
+      [projectName]
+    ));
     if(!projects) return null;
     return projects.objectAt(0);
   },
@@ -169,5 +171,6 @@ SC.mixin(Function.prototype, {
 });
 
 // Set the mode of operation.
-//CoreTasks.set('mode', CoreTasks.get('OFFLINE_MODE'));
-CoreTasks.set('mode', CoreTasks.get('ONLINE_MODE'));
+// CoreTasks.set('mode', CoreTasks.get('OFFLINE_MODE'));
+// CoreTasks.set('mode', CoreTasks.get('ONLINE_MODE'));
+CoreTasks.set('mode', CoreTasks.get('DJANGO_MODE'));

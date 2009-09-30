@@ -14,7 +14,7 @@ CoreTasks.UNALLOCATED_TASKS_NAME = '_UnallocatedTasks';
  * @extends CoreTasks.Record
  * @author Suvajit Gupta
  */
-CoreTasks.Project = CoreTasks.Record.extend(/** @scope CoreTasks.Project.prototype */ {
+CoreTasks.Project = Tasks.Project.extend(/** @scope CoreTasks.Project.prototype */ {
 
   /*
   init: function() {
@@ -39,6 +39,11 @@ CoreTasks.Project = CoreTasks.Record.extend(/** @scope CoreTasks.Project.prototy
    * The list of tasks associated with this project.
    */
   tasks: SC.Record.toMany('CoreTasks.Task', { defaultValue: [] }),
+  
+  /**
+   * Is this a system task?
+   */
+   system: NO,
 
   /**
    * The path to the icon associated with a project.
@@ -152,3 +157,5 @@ CoreTasks.Project.mixin(/** @scope CoreTasks.Project */ {
   }
   
 });
+
+CoreTasks.ALL_PROJECTSS_QUERY = SC.Query.local(CoreTasks.Project) ;
