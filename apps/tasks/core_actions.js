@@ -34,12 +34,19 @@ Tasks.mixin({
         }
         else {
           // Retrieve all users from the data source.
-          CoreTasks.get('store').find(
-            SC.Query.local(CoreTasks.User,undefined,{
-              successCallback: this._usersLoadSuccess.bind(this),
-              failureCallback: this._usersLoadFailure.bind(this)
-            }
-          ));
+          // CoreTasks.get('store').find(
+          //   SC.Query.local(CoreTasks.User,undefined,{
+          //     successCallback: this._usersLoadSuccess.bind(this),
+          //     failureCallback: this._usersLoadFailure.bind(this)
+          //   }
+          // ));
+          var u = CoreTasks.store.createRecord(CoreTasks.User, {
+            role: CoreTasks.USER_ROLE_DEVELOPER,
+            loginName: this.loginName,
+            username: this.loginName,
+            name: "Test User",
+          });
+          this._usersLoadSuccess([u.get('storeKey')]);
         }
         break;
 
@@ -373,8 +380,8 @@ Tasks.mixin({
     var project = CoreTasks.get('store').createRecord(
       CoreTasks.Project, { name: CoreTasks.NEW_PROJECT_NAME.loc() } );
     // FIXME: [SC] must set tasks array to empty because for some reason it is not defaulting it to empty.
-    project.set('tasks', []);
-    this.getPath('projectsController.content').pushObject(project);
+    // project.set('tasks', []);
+    // this.getPath('projectsController.content').pushObject(project); REMOVE
 
     var listView = Tasks.getPath('mainPage.mainPane.projectsList');
     var idx = listView.length - 1;

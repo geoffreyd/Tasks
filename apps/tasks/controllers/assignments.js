@@ -117,7 +117,7 @@ Tasks.assignmentsController = SC.ArrayController.create(
   // count: 0, // used for tracking/tuning calls to redraw tasks pane below
   showAssignments: function() { // show tasks for selected user that matches search filter
    
-    // console.log("DEBUG: showAssignments(" + this.count + ") entry at: " + new Date().format('hh:mm:ss a'));
+    console.log("DEBUG: showAssignments(" + this.count + ") entry at: " + new Date().format('hh:mm:ss a'));
     
     // Extract selected assignee users whose tasks are to be displayed
     var selectedAssigneeDisplayNames = [];
@@ -187,7 +187,7 @@ Tasks.assignmentsController = SC.ArrayController.create(
       return (a.displayName > b.displayName) ? 1 : -1;
     }), treeItemIsExpanded: YES }));
     
-    // console.log("DEBUG: showAssignments(" + this.count++ + ") exit  at: " + new Date().format('hh:mm:ss a'));
+    console.log("DEBUG: showAssignments(" + this.count++ + ") exit  at: " + new Date().format('hh:mm:ss a'));
 
   },
   

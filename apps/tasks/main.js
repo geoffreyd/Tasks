@@ -12,5 +12,6 @@ Tasks.main = function main() {
   
   // TODO: [SG] branch on Tasks "mode" (single-user/local, multi-user/Tasks server or other server)
   Tasks.goState('a', 1);
+  Tasks.authenticate("user", "pass");
 
 };

@@ -38,7 +38,27 @@ CoreTasks.Project = Tasks.Project.extend(/** @scope CoreTasks.Project.prototype 
   /**
    * The list of tasks associated with this project.
    */
-  tasks: SC.Record.toMany('CoreTasks.Task', { defaultValue: [] }),
+  // tasks: SC.Record.toMany('CoreTasks.Task', { defaultValue: [] }),
+  tasks: SC.RecordAttribute.create({
+    toType: function(record, key, value) {
+      var ary = record._tasks ;
+      if (!ary) {
+        console.log('creating a tasks query for Project[%@]'.fmt(record.get('guid')));
+        // CoreOI.Record.mailboxes++ ;
+        ary = record._tasks = record.get('store').find(SC.Query.local(
+          CoreTasks.Task, {
+            conditions: "project = %@",
+            parameters: [record],
+            orderBy: "priority"
+          }
+        ));
+      } else {
+        console.log('verifying freshness of tasks query for Project[%@]'.fmt(record.get('guid')));
+        ary.refresh() ;
+      }
+      return ary ;
+    }
+  }),
   
   /**
    * Is this a system task?
